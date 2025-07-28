@@ -12,10 +12,10 @@ export const users = sqliteTable('users', {
   updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const userItems = sqliteTable('user_items', {
+export const userReceipts = sqliteTable('user_receipts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  itemId: text('item_id').notNull(),
+  receiptId: text('receipt_id').notNull(),
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   createdBy: integer('created_by'),
 });
@@ -38,8 +38,8 @@ export const sessions = sqliteTable('sessions', {
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
-export type UserItem = typeof userItems.$inferSelect;
-export type NewUserItem = typeof userItems.$inferInsert;
+export type UserReceipt = typeof userReceipts.$inferSelect;
+export type NewUserReceipt = typeof userReceipts.$inferInsert;
 export type Otp = typeof otps.$inferSelect;
 export type NewOtp = typeof otps.$inferInsert;
 export type Session = typeof sessions.$inferSelect;

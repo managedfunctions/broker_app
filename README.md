@@ -1,6 +1,6 @@
-# Next.js + Cloudflare Workers + D1 + OTP Auth Template
+# Broker App
 
-A production-ready template for building Next.js applications on Cloudflare Workers with D1 database and OTP authentication via email.
+A broker application built with Next.js on Cloudflare Workers with D1 database and OTP authentication via email.
 
 ## Features
 
@@ -25,9 +25,9 @@ A production-ready template for building Next.js applications on Cloudflare Work
 ### 1. Clone and Install
 
 ```bash
-# Clone the template
-git clone <your-repo-url>
-cd <your-project-name>
+# Clone the repository
+git clone https://github.com/managedfunctions/broker_app.git
+cd broker_app
 
 # Install dependencies
 npm install
@@ -54,7 +54,7 @@ Update `.dev.vars` with:
 
 ```bash
 # Create a new D1 database
-npx wrangler d1 create your-app-db
+npx wrangler d1 create broker-app-db
 
 # Note the database_id from the output
 ```
@@ -63,7 +63,7 @@ Update `wrangler.toml` with your database ID:
 ```toml
 [[d1_databases]]
 binding = "BROKER_DB"
-database_name = "your-app-db"
+database_name = "broker-app-db"
 database_id = "your-database-id-here"
 ```
 
@@ -71,10 +71,10 @@ database_id = "your-database-id-here"
 
 ```bash
 # Apply migrations to local D1 database
-npx wrangler d1 execute your-app-db --local --file=./migrations/0001_create_tables.sql
+npx wrangler d1 execute broker-app-db --local --file=./migrations/0001_create_tables.sql
 
 # Apply migrations to remote D1 database
-npx wrangler d1 execute your-app-db --remote --file=./migrations/0001_create_tables.sql
+npx wrangler d1 execute broker-app-db --remote --file=./migrations/0001_create_tables.sql
 ```
 
 ### 5. Development
@@ -92,7 +92,7 @@ npm run dev
 # Deploy to production
 npm run deploy
 
-# The app will be available at https://your-app.your-subdomain.workers.dev
+# The app will be available at https://broker-app.your-subdomain.workers.dev
 ```
 
 ## Project Structure

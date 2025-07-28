@@ -1,7 +1,7 @@
 {
-  "name": "nextjs-cloudflare-d1-auth-template",
+  "name": "broker_app",
   "version": "1.0.0",
-  "description": "Next.js + Cloudflare Workers + D1 + OTP Auth Template",
+  "description": "Broker Application - Next.js + Cloudflare Workers + D1 + OTP Auth",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

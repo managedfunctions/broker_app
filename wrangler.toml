@@ -1,4 +1,4 @@
-name = "your-app-name"
+name = "broker-app"
 account_id = "your-account-id"
 main = ".open-next/worker.js"
 compatibility_date = "2025-03-01"
@@ -10,12 +10,12 @@ directory = ".open-next/assets"
 
 [[services]]
 binding = "WORKER_SELF_REFERENCE"
-service = "your-app-name"
+service = "broker-app"
 
 # D1 Database for user authentication and data
 [[d1_databases]]
 binding = "BROKER_DB"
-database_name = "your-app-db"
+database_name = "broker-app-db"
 database_id = "your-database-id"
 
 # KV namespace for sessions (optional, can use D1 instead)

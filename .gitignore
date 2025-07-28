@@ -41,3 +41,5 @@ next-env.d.ts
 .open-next/
 .dev.vars
 EOF < /dev/null
+# Local environment variables
+.dev.vars

@@ -169,6 +169,10 @@ npx wrangler secret put RESEND_API_KEY
 npx wrangler secret put JWT_SECRET
 ```
 
+The following secrets are already configured for production:
+- `RESEND_API_KEY`: Your Resend API key for sending OTP emails
+- `JWT_SECRET`: Secret key for signing JWT tokens
+
 ### Local Development
 
 Create `.dev.vars` file:

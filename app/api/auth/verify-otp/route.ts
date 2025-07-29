@@ -5,7 +5,6 @@ import { eq } from 'drizzle-orm';
 import { verifyOTP, createSession, createSessionToken } from '@/lib/auth';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
-export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {

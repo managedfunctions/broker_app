@@ -15,7 +15,7 @@ import {
   createSessionToken,
   verifySessionToken,
   deleteSession,
-} from '@/lib/auth'
+} from '@/lib/auth-utils'
 
 export async function sendOtpAction(formData: FormData) {
   const email = formData.get('email') as string

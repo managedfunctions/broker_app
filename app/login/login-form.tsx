@@ -20,7 +20,9 @@ export default function LoginForm() {
   )
 
   const [verifyState, verifyAction, verifyPending] = useActionState(
-    verifyOtpAction,
+    async (prevState: any, formData: FormData) => {
+      return await verifyOtpAction(formData)
+    },
     null
   )
 

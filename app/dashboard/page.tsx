@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { getDb } from '@/db'
-import { verifySessionToken, getSessionUser } from '@/lib/auth'
+import { verifySessionToken, getSessionUser } from '@/lib/auth-utils'
 import { getReceipts } from '@/app/actions/receipts'
 import DashboardClient from './dashboard-client'
 

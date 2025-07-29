@@ -5,7 +5,7 @@ import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { getDb } from '@/db'
 import { userReceipts } from '@/db/schema'
 import { eq } from 'drizzle-orm'
-import { verifySessionToken, getSessionUser } from '@/lib/auth'
+import { verifySessionToken, getSessionUser } from '@/lib/auth-utils'
 
 async function requireAuth() {
   const cookieStore = await cookies()

@@ -59,10 +59,10 @@ export async function getReceipts() {
     const placeholders = receiptIds.map((_, i) => `$${i + 1}`).join(',')
     
     const result = await client.query(
-      `SELECT id, bank_account_id, status, amount_cents, created_at, sender_name 
+      `SELECT id, bank_account_id, status, total_received, date_created, customer_short_name 
        FROM receipts 
        WHERE id IN (${placeholders})
-       ORDER BY created_at DESC`,
+       ORDER BY date_created DESC`,
       receiptIds
     )
 
@@ -70,10 +70,10 @@ export async function getReceipts() {
       id: row.id,
       bankAccountId: row.bank_account_id,
       status: row.status,
-      amountCents: row.amount_cents,
-      amount: row.amount_cents ? (row.amount_cents / 100).toFixed(2) : '0.00',
-      createdAt: row.created_at,
-      senderName: row.sender_name
+      amountCents: row.total_received ? Math.round(row.total_received * 100) : 0,
+      amount: row.total_received ? row.total_received.toFixed(2) : '0.00',
+      createdAt: row.date_created,
+      senderName: row.customer_short_name
     }))
 
     return { receipts }
@@ -110,9 +110,8 @@ export async function getReceiptDetails(receiptId: string) {
 
   try {
     const result = await client.query(
-      `SELECT id, bank_account_id, status, amount_cents, created_at, sender_name,
-              remittance_info, policy_numbers, insured_names, amount_received_cents,
-              difference_cents, document_url
+      `SELECT id, bank_account_id, status, total_received, date_created, customer_short_name,
+              description, remittance_url, total_allocated, total_difference
        FROM receipts 
        WHERE id = $1`,
       [receiptId]
@@ -127,18 +126,18 @@ export async function getReceiptDetails(receiptId: string) {
       id: row.id,
       bankAccountId: row.bank_account_id,
       status: row.status,
-      amountCents: row.amount_cents,
-      amount: row.amount_cents ? (row.amount_cents / 100).toFixed(2) : '0.00',
-      createdAt: row.created_at,
-      senderName: row.sender_name,
-      remittanceInfo: row.remittance_info,
-      policyNumbers: row.policy_numbers || [],
-      insuredNames: row.insured_names || [],
-      amountReceivedCents: row.amount_received_cents || [],
-      differenceCents: row.difference_cents || [],
-      documentUrl: row.document_url,
-      totalAllocated: '0.00',
-      difference: row.amount_cents ? (row.amount_cents / 100).toFixed(2) : '0.00'
+      amountCents: row.total_received ? Math.round(row.total_received * 100) : 0,
+      amount: row.total_received ? row.total_received.toFixed(2) : '0.00',
+      createdAt: row.date_created,
+      senderName: row.customer_short_name,
+      remittanceInfo: row.description,
+      policyNumbers: [],
+      insuredNames: [],
+      amountReceivedCents: [],
+      differenceCents: [],
+      documentUrl: row.remittance_url,
+      totalAllocated: row.total_allocated ? row.total_allocated.toFixed(2) : '0.00',
+      difference: row.total_difference ? row.total_difference.toFixed(2) : '0.00'
     }
 
     return { receipt }

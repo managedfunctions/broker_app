@@ -8,6 +8,29 @@ This broker app is built on Cloudflare Workers with:
 - **User Database**: Cloudflare D1 (SQLite) for users, sessions, and OTPs
 - **Receipts Database**: External PostgreSQL via Cloudflare Hyperdrive
 - **Session Management**: JWT tokens in HTTP-only cookies
+- **Actions**: Server actions pattern (no API routes)
+
+## Project Structure
+
+```
+app/
+├── actions/          # Server actions
+│   ├── auth.ts      # Authentication actions
+│   └── receipts.ts  # Receipt data actions
+├── dashboard/       # Protected dashboard pages
+│   ├── page.tsx
+│   ├── dashboard-client.tsx
+│   └── receipts/[id]/page.tsx
+├── login/           # Login flow
+│   ├── page.tsx
+│   └── login-form.tsx
+└── page.tsx         # Home page
+
+src/
+├── db/              # Database schemas and config
+└── lib/             # Utility functions
+    └── auth-utils.ts # Auth helper functions
+```
 
 ## Database Structure
 
@@ -29,15 +52,20 @@ This broker app is built on Cloudflare Workers with:
 4. System creates JWT session (7-day expiry) in HTTP-only cookie
 5. Middleware protects `/dashboard/*` routes
 
-## Key Endpoints
+## Key Pages & Server Actions
 
+### Pages
 - `GET /` - Home page with login link
-- `GET /login` - Login page
-- `POST /api/auth/send-otp` - Send OTP to email
-- `POST /api/auth/verify-otp` - Verify OTP and create session
-- `GET /api/auth/me` - Get current user info
-- `POST /api/auth/logout` - Clear session
-- `GET /dashboard` - Protected dashboard
+- `GET /login` - Login page with OTP flow
+- `GET /dashboard` - Protected dashboard showing receipts
+- `GET /dashboard/receipts/[id]` - Receipt detail page
+
+### Server Actions (in app/actions/)
+- `sendOtpAction` - Sends OTP to email
+- `verifyOtpAction` - Verifies OTP and creates session
+- `logoutAction` - Clears session and redirects to login
+- `getReceipts` - Fetches user's receipts from PostgreSQL
+- `getReceiptDetails` - Fetches specific receipt details
 
 ## Development
 
@@ -45,14 +73,14 @@ This broker app is built on Cloudflare Workers with:
 # Install dependencies
 npm install
 
-# Run locally (port 3003)
+# Run locally (default port 3000)
 npm run dev
 
 # Deploy to Cloudflare
 npm run deploy
 ```
 
-## Direct SQL Queries
+## Direct SQL Queries of Postgres DB on fly.io
 
 ```bash
 # Query external PostgreSQL (receipts database)
